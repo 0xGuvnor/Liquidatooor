@@ -3,7 +3,6 @@ import type { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-deploy";
 import "hardhat-contract-sizer";
-import "@appliedblockchain/chainlink-plugins-fund-link";
 import "./tasks";
 
 dotenv.config();
@@ -15,9 +14,9 @@ const config: HardhatUserConfig = {
             hardfork: "merge",
             // If you want to do some forking set `enabled` to true
             forking: {
-                url: process.env.MAINNET_URL!,
+                url: process.env.POLY_MUMBAI_URL!,
                 blockNumber: Number(process.env.FORKING_BLOCK_NUMBER),
-                enabled: false,
+                enabled: true,
             },
             chainId: 31337,
         },
@@ -54,21 +53,27 @@ const config: HardhatUserConfig = {
             chainId: 4002,
             saveDeployments: true,
         },
-        optimisticKovan: {
-            url: process.env.OP_KOVAN_URL,
+        avaxFuji: {
+            url: process.env.AVAX_FUJI_URL,
             accounts: [process.env.PRIVATE_KEY!],
-            chainId: 69,
+            chainId: 43113,
             saveDeployments: true,
         },
     },
     etherscan: {
         apiKey: {
-            miannet: process.env.ETHERSCAN_API_KEY!,
+            // Mainnets
+            mainnet: process.env.ETHERSCAN_API_KEY!,
+            polygon: process.env.POLYSCAN_API_KEY!,
+            bsc: process.env.BSCSCAN_API_KEY!,
+            opera: process.env.FTMSCAN_API_KEY!,
+            avalanche: process.env.SNOWTRACE_API_KEY!,
+            // Testnets
             goerli: process.env.ETHERSCAN_API_KEY!,
             polygonMumbai: process.env.POLYSCAN_API_KEY!,
             bscTestnet: process.env.BSCSCAN_API_KEY!,
             ftmTestnet: process.env.FTMSCAN_API_KEY!,
-            optimisticKovan: process.env.OPSCAN_API_KEY!,
+            avalancheFujiTestnet: process.env.SNOWTRACE_API_KEY!,
         },
     },
     gasReporter: {
@@ -93,7 +98,7 @@ const config: HardhatUserConfig = {
     solidity: {
         compilers: [
             {
-                version: "0.8.8",
+                version: "0.8.10",
             },
             {
                 version: "0.6.6",

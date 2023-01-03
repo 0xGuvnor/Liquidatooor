@@ -1,5 +1,5 @@
 import { DeployFunction } from "hardhat-deploy/types";
-import { getNamedAccounts, deployments, network } from "hardhat";
+import { network, ethers } from "hardhat";
 
 const deployFunction: DeployFunction = async ({ deployments, getNamedAccounts }) => {
     const { deploy, log } = deployments;
@@ -12,9 +12,11 @@ const deployFunction: DeployFunction = async ({ deployments, getNamedAccounts })
     if (chainId === 31337) {
         log("Local network detected! Deploying mocks...");
 
-        await deploy("Mock", { from: deployer, log: true });
-
-        log(`Mocks Deployed!`);
+        await deploy("MockAggregator", {
+            from: deployer,
+            args: [ethers.utils.parseUnits("280", 8)],
+            log: true,
+        });
     }
 };
 

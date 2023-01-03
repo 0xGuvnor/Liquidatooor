@@ -278,6 +278,11 @@
     ethers "~4.0.4"
     lodash "^4.17.21"
 
+"@aave/core-v3@^1.16.2-beta.5":
+  version "1.16.2-beta.5"
+  resolved "https://registry.yarnpkg.com/@aave/core-v3/-/core-v3-1.16.2-beta.5.tgz#110bf92e10a3f919233c1b79b82307df98e9773e"
+  integrity sha512-2mEt1M1M/63gVhzweXmVE/2r8w8AVyzRlN36+eqRmif32cGo4P56jmCWGS77Rb/hPzNKQx6IBYZArnZHqi8QNQ==
+
 "@appliedblockchain/chainlink-contracts@0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@appliedblockchain/chainlink-contracts/-/chainlink-contracts-0.0.4.tgz#ee65494d18075a6c286c776f1201d01ed7bb6cd7"
@@ -1634,6 +1639,11 @@
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-3.4.2.tgz#d81f786fda2871d1eb8a8c5a73e455753ba53527"
   integrity sha512-z0zMCjyhhp4y7XKAcDAi3Vgms4T2PstwBdahiO0+9NaGICQKjynK3wduSRplTgk4LXmoO1yfDGO5RbjKYxtuxA==
+
+"@openzeppelin/contracts@^4.8.0":
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.8.0.tgz#6854c37df205dd2c056bdfa1b853f5d732109109"
+  integrity sha512-AGuwhRRL+NaKx73WKRNzeCxOCOCxpaqF+kp8TJ89QzAipSwZy/NoflkWaL9bywXFRhIzXt8j38sfF7KBKCPWLw==
 
 "@scure/base@~1.1.0":
   version "1.1.1"
