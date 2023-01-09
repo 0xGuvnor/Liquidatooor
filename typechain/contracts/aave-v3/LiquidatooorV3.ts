@@ -30,38 +30,35 @@ import type {
 export interface LiquidatooorV3Interface extends utils.Interface {
   functions: {
     "ADDRESSES_PROVIDER()": FunctionFragment;
-    "MAX_UINT()": FunctionFragment;
     "POOL()": FunctionFragment;
     "executeOperation(address,uint256,uint256,address,bytes)": FunctionFragment;
-    "getBalance(address)": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "requestFlashLoan(address,uint256,address,address,bool)": FunctionFragment;
+    "router()": FunctionFragment;
+    "sweepETH()": FunctionFragment;
+    "sweepToken(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "withdrawETH()": FunctionFragment;
-    "withdrawToken(address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "ADDRESSES_PROVIDER"
-      | "MAX_UINT"
       | "POOL"
       | "executeOperation"
-      | "getBalance"
       | "owner"
       | "renounceOwnership"
       | "requestFlashLoan"
+      | "router"
+      | "sweepETH"
+      | "sweepToken"
       | "transferOwnership"
-      | "withdrawETH"
-      | "withdrawToken"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "ADDRESSES_PROVIDER",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "MAX_UINT", values?: undefined): string;
   encodeFunctionData(functionFragment: "POOL", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "executeOperation",
@@ -72,10 +69,6 @@ export interface LiquidatooorV3Interface extends utils.Interface {
       PromiseOrValue<string>,
       PromiseOrValue<BytesLike>
     ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getBalance",
-    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -92,16 +85,14 @@ export interface LiquidatooorV3Interface extends utils.Interface {
       PromiseOrValue<boolean>
     ]
   ): string;
+  encodeFunctionData(functionFragment: "router", values?: undefined): string;
+  encodeFunctionData(functionFragment: "sweepETH", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "transferOwnership",
+    functionFragment: "sweepToken",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "withdrawETH",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawToken",
+    functionFragment: "transferOwnership",
     values: [PromiseOrValue<string>]
   ): string;
 
@@ -109,13 +100,11 @@ export interface LiquidatooorV3Interface extends utils.Interface {
     functionFragment: "ADDRESSES_PROVIDER",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "MAX_UINT", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "POOL", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "executeOperation",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "getBalance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -125,16 +114,11 @@ export interface LiquidatooorV3Interface extends utils.Interface {
     functionFragment: "requestFlashLoan",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "router", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "sweepETH", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "sweepToken", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawETH",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawToken",
     data: BytesLike
   ): Result;
 
@@ -186,23 +170,16 @@ export interface LiquidatooorV3 extends BaseContract {
   functions: {
     ADDRESSES_PROVIDER(overrides?: CallOverrides): Promise<[string]>;
 
-    MAX_UINT(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     POOL(overrides?: CallOverrides): Promise<[string]>;
 
     executeOperation(
       asset: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       premium: PromiseOrValue<BigNumberish>,
-      initiator: PromiseOrValue<string>,
+      arg3: PromiseOrValue<string>,
       params: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-
-    getBalance(
-      _token: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -219,24 +196,24 @@ export interface LiquidatooorV3 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    router(overrides?: CallOverrides): Promise<[string]>;
+
+    sweepETH(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    sweepToken(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    withdrawETH(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    withdrawToken(
-      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   ADDRESSES_PROVIDER(overrides?: CallOverrides): Promise<string>;
-
-  MAX_UINT(overrides?: CallOverrides): Promise<BigNumber>;
 
   POOL(overrides?: CallOverrides): Promise<string>;
 
@@ -244,15 +221,10 @@ export interface LiquidatooorV3 extends BaseContract {
     asset: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     premium: PromiseOrValue<BigNumberish>,
-    initiator: PromiseOrValue<string>,
+    arg3: PromiseOrValue<string>,
     params: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
-
-  getBalance(
-    _token: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -269,24 +241,24 @@ export interface LiquidatooorV3 extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  router(overrides?: CallOverrides): Promise<string>;
+
+  sweepETH(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  sweepToken(
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   transferOwnership(
     newOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  withdrawETH(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  withdrawToken(
-    _token: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   callStatic: {
     ADDRESSES_PROVIDER(overrides?: CallOverrides): Promise<string>;
-
-    MAX_UINT(overrides?: CallOverrides): Promise<BigNumber>;
 
     POOL(overrides?: CallOverrides): Promise<string>;
 
@@ -294,15 +266,10 @@ export interface LiquidatooorV3 extends BaseContract {
       asset: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       premium: PromiseOrValue<BigNumberish>,
-      initiator: PromiseOrValue<string>,
+      arg3: PromiseOrValue<string>,
       params: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    getBalance(
-      _token: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -317,15 +284,17 @@ export interface LiquidatooorV3 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
+    router(overrides?: CallOverrides): Promise<string>;
+
+    sweepETH(overrides?: CallOverrides): Promise<void>;
+
+    sweepToken(
+      _token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    withdrawETH(overrides?: CallOverrides): Promise<void>;
-
-    withdrawToken(
-      _token: PromiseOrValue<string>,
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -344,22 +313,15 @@ export interface LiquidatooorV3 extends BaseContract {
   estimateGas: {
     ADDRESSES_PROVIDER(overrides?: CallOverrides): Promise<BigNumber>;
 
-    MAX_UINT(overrides?: CallOverrides): Promise<BigNumber>;
-
     POOL(overrides?: CallOverrides): Promise<BigNumber>;
 
     executeOperation(
       asset: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       premium: PromiseOrValue<BigNumberish>,
-      initiator: PromiseOrValue<string>,
+      arg3: PromiseOrValue<string>,
       params: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    getBalance(
-      _token: PromiseOrValue<string>,
-      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -377,17 +339,19 @@ export interface LiquidatooorV3 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    router(overrides?: CallOverrides): Promise<BigNumber>;
+
+    sweepETH(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    sweepToken(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    withdrawETH(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    withdrawToken(
-      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -397,22 +361,15 @@ export interface LiquidatooorV3 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    MAX_UINT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     POOL(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     executeOperation(
       asset: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       premium: PromiseOrValue<BigNumberish>,
-      initiator: PromiseOrValue<string>,
+      arg3: PromiseOrValue<string>,
       params: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    getBalance(
-      _token: PromiseOrValue<string>,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -430,17 +387,19 @@ export interface LiquidatooorV3 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    router(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    sweepETH(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    sweepToken(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    withdrawETH(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    withdrawToken(
-      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "compile": "hardhat compile",
-    "test": "hardhat test ./test/unit/*.spec.ts --network hardhat",
+    "test": "hardhat test ./test/*.spec.ts --network hardhat",
     "test-staging": "hardhat test ./test/staging/*.spec.ts --network goerli",
     "lint": "solhint 'contracts/*.sol'",
     "lint:fix": "solhint 'contracts/**/*.sol' --fix",
@@ -47,6 +47,8 @@
     "@chainlink/test-helpers": "^0.0.7-alpha",
     "@chainlink/token": "^1.1.0",
     "@openzeppelin/contracts": "^4.8.0",
+    "@uniswap/v3-core": "^1.0.1",
+    "@uniswap/v3-periphery": "^1.4.3",
     "babel-eslint": "^10.1.0",
     "dotenv": "^16.0.3"
   },

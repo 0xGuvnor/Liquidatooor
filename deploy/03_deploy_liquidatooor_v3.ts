@@ -34,4 +34,4 @@ const deployFunction: DeployFunction = async ({ deployments, getNamedAccounts })
 };
 
 export default deployFunction;
-deployFunction.tags = ["all", "v3"];
+deployFunction.tags = ["all", "v3", "swap"];

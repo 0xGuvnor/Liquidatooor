@@ -14,11 +14,15 @@ const deployFunction: DeployFunction = async ({ deployments, getNamedAccounts })
 
         await deploy("MockAggregator", {
             from: deployer,
-            args: [ethers.utils.parseUnits("280", 8)],
+            args: [ethers.utils.parseUnits("230", 8)],
             log: true,
         });
+
+        await deploy("Dex", { from: deployer, log: true });
+
+        await deploy("UniswapV3Liquidity", { from: deployer, log: true });
     }
 };
 
 export default deployFunction;
-deployFunction.tags = [`all`, `mocks`];
+deployFunction.tags = [`all`, `mocks`, "swap"];

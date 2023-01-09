@@ -3,3 +3,4 @@
 /* eslint-disable */
 export * as aaveV2 from "./aave-v2";
 export * as aaveV3 from "./aave-v3";
+export { FlashSwap__factory } from "./FlashSwap__factory";

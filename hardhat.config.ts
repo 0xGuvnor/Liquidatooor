@@ -15,7 +15,7 @@ const config: HardhatUserConfig = {
             // If you want to do some forking set `enabled` to true
             forking: {
                 url: process.env.POLY_MUMBAI_URL!,
-                blockNumber: Number(process.env.FORKING_BLOCK_NUMBER),
+                blockNumber: Number(process.env.POLY_MUMBAI_FORKING_BLOCK_NUMBER),
                 enabled: true,
             },
             chainId: 31337,
@@ -99,6 +99,9 @@ const config: HardhatUserConfig = {
         compilers: [
             {
                 version: "0.8.10",
+            },
+            {
+                version: "0.7.6",
             },
             {
                 version: "0.6.6",
