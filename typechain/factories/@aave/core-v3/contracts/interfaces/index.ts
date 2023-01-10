@@ -6,4 +6,3 @@ export { IPool__factory } from "./IPool__factory";
 export { IPoolAddressesProvider__factory } from "./IPoolAddressesProvider__factory";
 export { IPoolDataProvider__factory } from "./IPoolDataProvider__factory";
 export { IPriceOracleGetter__factory } from "./IPriceOracleGetter__factory";
-export { IPriceOracleSentinel__factory } from "./IPriceOracleSentinel__factory";

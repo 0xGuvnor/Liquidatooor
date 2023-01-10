@@ -34,7 +34,7 @@ export interface LiquidatooorV3Interface extends utils.Interface {
     "executeOperation(address,uint256,uint256,address,bytes)": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "requestFlashLoan(address,uint256,address,address,bool)": FunctionFragment;
+    "requestFlashLoan(address,uint256,address,address)": FunctionFragment;
     "router()": FunctionFragment;
     "sweepETH()": FunctionFragment;
     "sweepToken(address)": FunctionFragment;
@@ -81,8 +81,7 @@ export interface LiquidatooorV3Interface extends utils.Interface {
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
+      PromiseOrValue<string>
     ]
   ): string;
   encodeFunctionData(functionFragment: "router", values?: undefined): string;
@@ -192,7 +191,6 @@ export interface LiquidatooorV3 extends BaseContract {
       _amount: PromiseOrValue<BigNumberish>,
       _collateral: PromiseOrValue<string>,
       _liquidatee: PromiseOrValue<string>,
-      _receiveAToken: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -237,7 +235,6 @@ export interface LiquidatooorV3 extends BaseContract {
     _amount: PromiseOrValue<BigNumberish>,
     _collateral: PromiseOrValue<string>,
     _liquidatee: PromiseOrValue<string>,
-    _receiveAToken: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -280,7 +277,6 @@ export interface LiquidatooorV3 extends BaseContract {
       _amount: PromiseOrValue<BigNumberish>,
       _collateral: PromiseOrValue<string>,
       _liquidatee: PromiseOrValue<string>,
-      _receiveAToken: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -335,7 +331,6 @@ export interface LiquidatooorV3 extends BaseContract {
       _amount: PromiseOrValue<BigNumberish>,
       _collateral: PromiseOrValue<string>,
       _liquidatee: PromiseOrValue<string>,
-      _receiveAToken: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -383,7 +378,6 @@ export interface LiquidatooorV3 extends BaseContract {
       _amount: PromiseOrValue<BigNumberish>,
       _collateral: PromiseOrValue<string>,
       _liquidatee: PromiseOrValue<string>,
-      _receiveAToken: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -150,8 +150,7 @@ import impersonateAccount from "../utils/impersonateAccount";
                   dai.address,
                   ethers.utils.parseEther((await borrowAmount()).toString()),
                   weth.address,
-                  user.address,
-                  false
+                  user.address
               );
 
               console.log("\nEnding health factor: ", await healthFactor());

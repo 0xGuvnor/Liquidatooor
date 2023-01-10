@@ -26,8 +26,6 @@ export type { IPoolDataProvider } from "./@aave/core-v3/contracts/interfaces/IPo
 export { IPoolDataProvider__factory } from "./factories/@aave/core-v3/contracts/interfaces/IPoolDataProvider__factory";
 export type { IPriceOracleGetter } from "./@aave/core-v3/contracts/interfaces/IPriceOracleGetter";
 export { IPriceOracleGetter__factory } from "./factories/@aave/core-v3/contracts/interfaces/IPriceOracleGetter__factory";
-export type { IPriceOracleSentinel } from "./@aave/core-v3/contracts/interfaces/IPriceOracleSentinel";
-export { IPriceOracleSentinel__factory } from "./factories/@aave/core-v3/contracts/interfaces/IPriceOracleSentinel__factory";
 export type { MockAggregator } from "./@aave/core-v3/contracts/mocks/oracle/CLAggregators/MockAggregator";
 export { MockAggregator__factory } from "./factories/@aave/core-v3/contracts/mocks/oracle/CLAggregators/MockAggregator__factory";
 export type { Ownable } from "./@openzeppelin/contracts/access/Ownable";
@@ -56,9 +54,3 @@ export type { IERC721Receiver } from "./contracts/aave-v3/mocks/UniswapV3Liquidi
 export { IERC721Receiver__factory } from "./factories/contracts/aave-v3/mocks/UniswapV3Liquidity.sol/IERC721Receiver__factory";
 export type { UniswapV3Liquidity } from "./contracts/aave-v3/mocks/UniswapV3Liquidity.sol/UniswapV3Liquidity";
 export { UniswapV3Liquidity__factory } from "./factories/contracts/aave-v3/mocks/UniswapV3Liquidity.sol/UniswapV3Liquidity__factory";
-export type { IDex } from "./contracts/aave-v3/testing/LiquidatooorV3Testing.sol/IDex";
-export { IDex__factory } from "./factories/contracts/aave-v3/testing/LiquidatooorV3Testing.sol/IDex__factory";
-export type { LiquidatooorV3Testing } from "./contracts/aave-v3/testing/LiquidatooorV3Testing.sol/LiquidatooorV3Testing";
-export { LiquidatooorV3Testing__factory } from "./factories/contracts/aave-v3/testing/LiquidatooorV3Testing.sol/LiquidatooorV3Testing__factory";
-export type { FlashSwap } from "./contracts/FlashSwap";
-export { FlashSwap__factory } from "./factories/contracts/FlashSwap__factory";

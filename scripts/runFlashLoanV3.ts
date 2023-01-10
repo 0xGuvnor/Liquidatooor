@@ -1,83 +1,72 @@
 import { getUserDebt } from "../utils/getUserDebt";
-import { setTokenApproval } from "./../utils/setTokenApproval";
-import { IERC20 } from "./../typechain/@openzeppelin/contracts/token/ERC20/IERC20";
 import { IPool } from "./../typechain/@aave/core-v3/contracts/interfaces/IPool";
-import { fundContract } from "./../utils/fundContract";
-import { developmentChains, networkConfig } from "../utils/helper-hardhat-config";
+import { networkConfig } from "../utils/helper-hardhat-config";
 import { ethers, network } from "hardhat";
-import impersonateAccount from "../utils/impersonateAccount";
-import { IAaveOracle, LiquidatooorV3Testing, MockAggregator } from "../typechain";
-import { getUserCollateral } from "../utils/getUserCollateral";
+import { LiquidatooorV3Testing } from "../typechain";
+import { IERC20 } from "../typechain/contracts/aave-v2/interfaces";
 
+const chainId = network.config.chainId!;
+
+// Change these inputs
 const liquidatee = "0x65C4999968db9EC4e41b9DBb40691132F407EE95";
+const borrowTokenAddress = networkConfig[chainId].v3Dai!;
+const collateralAddress = networkConfig[chainId].v3Weth!;
 
 async function main() {
-    const chainId = network.config.chainId!;
-    const Liquidatooor: LiquidatooorV3Testing = await ethers.getContract("LiquidatooorV3");
-    const borrowTokenAddress = networkConfig[chainId].v3Dai!;
-    // We need to explicitly specify the IERC20 interface as the IERC20 namespace is taken by aave & openzeppelin
-    const borrowToken: IERC20 = await ethers.getContractAt(
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
-        borrowTokenAddress
-    );
-    const collateralAddress = networkConfig[chainId].v3Weth!;
+    const [account] = await ethers.getSigners();
+    const liquidatooor: LiquidatooorV3Testing = await ethers.getContract("LiquidatooorV3");
+
     const collateral: IERC20 = await ethers.getContractAt(
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
+        // We need to explicitly specify the IERC20 interface as the IERC20 namespace is taken by Aave & Openzeppelin
+        // "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
+        "IERC20",
         collateralAddress
     );
 
     // Retreiving account details from Aave's Pool contract
-    const poolAddress = await Liquidatooor.POOL();
-    const Pool: IPool = await ethers.getContractAt("IPool", poolAddress);
+    const pool: IPool = await ethers.getContractAt("IPool", await liquidatooor.POOL());
     const healthFactor = Number(
-        ethers.utils.formatEther((await Pool.getUserAccountData(liquidatee)).healthFactor)
+        ethers.utils.formatEther((await pool.getUserAccountData(liquidatee)).healthFactor)
     );
-    // console.log(`Target's current health factor: ${healthFactor}\n`);
+    console.log(`Target's current health factor: ${healthFactor}\n`);
 
-    // let borrowAmount: number;
+    const totalDebt = await getUserDebt(
+        await liquidatooor.ADDRESSES_PROVIDER(),
+        liquidatee,
+        borrowTokenAddress
+    );
 
-    // const totalDebt = await getUserDebt(
-    //     await Liquidatooor.ADDRESSES_PROVIDER(),
-    //     liquidatee,
-    //     borrowTokenAddress
-    // );
-    // console.log(totalDebt);
+    /*
+     *  Able to liquidate the entire debt if health factor is lower than 0.95
+     *  50% of total debt otherwise
+     */
+    let borrowAmount: number = 0;
+    if (healthFactor < 1 && healthFactor > 0.95) {
+        borrowAmount = totalDebt * 0.5;
+    } else if (healthFactor < 0.95) {
+        borrowAmount = totalDebt;
+    }
 
-    // /*
-    // Able to liquidate the entire debt if health factor is lower than 0.95
-    // 50% of total debt otherwise
-    // */
-    // if (healthFactor < 1 && healthFactor > 0.95) {
-    //     borrowAmount = totalDebt * 0.5;
-    // } else if (healthFactor < 0.95) {
-    //     borrowAmount = totalDebt;
-    // }
+    const startingBal = await collateral.balanceOf(account.address);
 
-    // Contract needs some funds to pay the flash loan fee
-    // await fundContract(Liquidatooor.address, borrowTokenAddress, "2000");
+    console.log(`Starting token balance: ${ethers.utils.formatEther(startingBal)}\n`);
+    console.log("Initiating flash loan...\n");
 
-    // const startingBal = await Liquidatooor.getBalance(borrowTokenAddress);
+    const tx = await liquidatooor.requestFlashLoan(
+        borrowTokenAddress,
+        ethers.utils.parseEther(borrowAmount.toString()),
+        collateralAddress,
+        liquidatee,
+        false
+    );
+    await tx.wait();
 
-    // console.log(`Starting token balance: ${ethers.utils.formatEther(startingBal)}\n`);
-    // console.log("Initiating flash loan...\n");
+    console.log("Flashed! ⚡️\n");
 
-    // const tx = await Liquidatooor.requestFlashLoan(
-    //     borrowTokenAddress,
-    //     borrowAmount,
-    //     collateralAddress,
-    //     liquidatee,
-    //     false
-    // );
-    // await tx.wait();
+    const endingBal = await collateral.balanceOf(account.address);
 
-    // console.log("Flashed! ⚡️\n");
-
-    // const endingBal = await Liquidatooor.getBalance(borrowTokenAddress);
-
-    // console.log(`Ending token balance: ${ethers.utils.formatEther(endingBal)}\n`);
-
-    // Revoke allowance from Pool contract, as unlimited allowance was given in executeOperation()
-    // await setTokenApproval(borrowToken, Liquidatooor.address, Pool.address, "0");
+    console.log(`Ending token balance: ${ethers.utils.formatEther(endingBal)}`);
+    console.log(`Profit: ${endingBal.sub(startingBal)}`);
 }
 
 main()

@@ -3,5 +3,4 @@
 /* eslint-disable */
 export * as interfaces from "./interfaces";
 export * as mocks from "./mocks";
-export * as testing from "./testing";
 export { LiquidatooorV3__factory } from "./LiquidatooorV3__factory";

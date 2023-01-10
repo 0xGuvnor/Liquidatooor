@@ -5,6 +5,4 @@ import type * as interfaces from "./interfaces";
 export type { interfaces };
 import type * as mocks from "./mocks";
 export type { mocks };
-import type * as testing from "./testing";
-export type { testing };
 export type { LiquidatooorV3 } from "./LiquidatooorV3";

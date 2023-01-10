@@ -25,4 +25,4 @@ const deployFunction: DeployFunction = async ({ deployments, getNamedAccounts })
 };
 
 export default deployFunction;
-deployFunction.tags = [`all`, `mocks`, "swap"];
+deployFunction.tags = ["all", "mocks", "swap"];
