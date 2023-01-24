@@ -145,7 +145,8 @@ contract LiquidatooorV3 is FlashLoanSimpleReceiverBase, Ownable {
 
     /**
      * @notice Admin function to rescue ETH sent to contract
-     */ function sweepETH() external onlyOwner {
+     */
+    function sweepETH() external onlyOwner {
         address payable to = payable(owner());
         (bool ok, ) = to.call{value: address(this).balance}("");
         require(ok);
